@@ -1,6 +1,7 @@
 package com.company;
 
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
@@ -47,7 +48,21 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
         String text;
-        text = new String(Files.readAllBytes(Paths.get("text.txt")));
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(new FileInputStream("text.txt"), StandardCharsets.UTF_8));
+        try {
+            StringBuilder sb = new StringBuilder();
+            String line = br.readLine();
+
+            while (line != null) {
+                sb.append(line);
+                sb.append(System.lineSeparator());
+                line = br.readLine();
+            }
+            text = sb.toString();
+        } finally {
+            br.close();
+        }
 
         for (int i = 0; i < 13; i++) {
 
